@@ -1,18 +1,17 @@
 package ui;
 
-import java.io.IOException;
-
+import java.util.*;
+import java.io.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
-import javafx.scene.control.ButtonType;
-import javafx.scene.control.Dialog;
-import javafx.scene.control.DialogPane;
+import javafx.scene.Scene;
 import javafx.scene.control.Label;
-import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import model.Costing;
 
 public class GUI {
@@ -53,7 +52,7 @@ public class GUI {
     private TextField unitsFinishedtxt;
 
     @FXML
-    private TextField processlbl;
+    private TextField processtxt;
 
     @FXML
     private TextField costIItxt;
@@ -65,13 +64,13 @@ public class GUI {
     private TextField costIFtxt;
 
     @FXML
-    private TextField acpMDtxt;
+    private TextField acMDtxt;
 
     @FXML
-    private TextField acpCIFtxt;
+    private TextField acCIFtxt;
 
     @FXML
-    private TextField acpMODtxt;
+    private TextField acMODtxt;
 
     @FXML
     private Label businesslbl;
@@ -94,6 +93,7 @@ public class GUI {
 	private Costing costing;
 	public GUI(Costing costing) {
 		this.costing=costing;
+		extracted = new HashMap<String, Double>();
 	}
 	@FXML
 	public void loadMainWindow(ActionEvent event) throws IOException {
@@ -106,7 +106,10 @@ public class GUI {
 	
     @FXML
     void signIn(ActionEvent event) throws IOException {
+    	costing.entry[0] = businesstxt.getText();
+    	costing.entry[1] = periodotxt.getText();
     	loadProcessWindow(null);
+    	
     }
     
 	@FXML
@@ -117,25 +120,55 @@ public class GUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(setting);
 	}
-	DialogPane dp;
+	Stage window;
 	@FXML
 	public void loadPopUp() throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("pp-pop-up.fxml"));
 		loader.setController(this);
-		DialogPane root = loader.load();
-		Dialog<ButtonType> dialog = new Dialog<>();
-		dialog.setDialogPane(root);
-		dialog.setTitle("PP extra info");
-		dialog.show();
+		window = new Stage();
+		window.initModality(Modality.APPLICATION_MODAL);
+		window.setTitle("PP extra info");
+		Parent root = loader.load();
+		Scene scene = new Scene(root);
+		window.setScene(scene);
+		window.show();
+	}
+	public static HashMap<String, Double> extracted;
+	void commonData() {
+		costing.entry[2] = processtxt.getText();
+		extracted.clear();
+		extracted.put("Unidades II", Double.parseDouble(unitsIItxt.getText()));
+		extracted.put("Costo II", Double.parseDouble(costIItxt.getText()));
+		extracted.put("%MD II", Double.parseDouble(pMDIItxt.getText()));
+		extracted.put("%MOD II", Double.parseDouble(pMODIItxt.getText()));
+		extracted.put("%CIF II", Double.parseDouble(pCIFIItxt.getText()));
+		extracted.put("Unidades IF", Double.parseDouble(unitsIFtxt.getText()));
+		extracted.put("Costo IF", Double.parseDouble(costIFtxt.getText()));
+		extracted.put("%MD IF", Double.parseDouble(pMDIFtxt.getText()));
+		extracted.put("%MOD IF", Double.parseDouble(pMODIFtxt.getText()));
+		extracted.put("%CIF IF", Double.parseDouble(pCIFIFtxt.getText()));
+		extracted.put("Unidades Comenzadas", Double.parseDouble(unitsStartedtxt.getText()));
+		extracted.put("Costo Comenzadas", Double.parseDouble(costStartedtxt.getText()));
+		extracted.put("Unidades Terminadas", Double.parseDouble(unitsFinishedtxt.getText()));
+		extracted.put("Costo Agregado MD", Double.parseDouble(acMDtxt.getText()));
+		extracted.put("Costo Agregado MOD", Double.parseDouble(acMODtxt.getText()));
+		extracted.put("Costo Agregado CIF", Double.parseDouble(acCIFtxt.getText()));
 	}
 	
 	@FXML
     void methodPEPS(ActionEvent event) {
-
+		commonData();
+		costing.peps();
     }
 	
 	@FXML
     void methodPP(ActionEvent event) {
+		commonData();
+		extracted.put("Costo transferido", Double.parseDouble(transferCosttxt.getText()));
+		extracted.put("Costo MD",Double.parseDouble(cMDtxt.getText()));
+		extracted.put("Costo MOD",Double.parseDouble(cMODtxt.getText()));
+		extracted.put("Costo CIF",Double.parseDouble(cCIFtxt.getText()));
+		window.close();
 		
     }
 	

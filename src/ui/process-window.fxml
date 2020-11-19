@@ -121,7 +121,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="processlbl" layoutX="390.0" layoutY="10.0" prefHeight="30.0" prefWidth="150.0">
+      <TextField fx:id="processtxt" layoutX="390.0" layoutY="10.0" prefHeight="30.0" prefWidth="150.0">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -148,32 +148,32 @@
             <Font name="Arial" size="15.0" />
          </font>
       </TextField>
-      <Label layoutX="30.0" layoutY="329.0" text="MD(%):">
+      <Label layoutX="30.0" layoutY="329.0" text="MD:">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="acpMDtxt" layoutX="100.0" layoutY="324.0" prefHeight="30.0" prefWidth="90.0" promptText="90">
+      <TextField fx:id="acMDtxt" layoutX="90.0" layoutY="324.0" prefHeight="30.0" prefWidth="90.0" promptText="\$">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </TextField>
-      <Label layoutX="420.0" layoutY="329.0" text="CIF(%):">
+      <Label layoutX="430.0" layoutY="329.0" text="CIF:">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="acpCIFtxt" layoutX="490.0" layoutY="324.0" prefHeight="30.0" prefWidth="90.0" promptText="90">
+      <TextField fx:id="acCIFtxt" layoutX="490.0" layoutY="324.0" prefHeight="30.0" prefWidth="90.0" promptText="\$">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </TextField>
-      <Label layoutX="230.0" layoutY="329.0" text="MOD(%):">
+      <Label layoutX="230.0" layoutY="329.0" text="MOD:">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField fx:id="acpMODtxt" layoutX="300.0" layoutY="324.0" prefHeight="30.0" prefWidth="90.0" promptText="90">
+      <TextField fx:id="acMODtxt" layoutX="290.0" layoutY="324.0" prefHeight="30.0" prefWidth="90.0" promptText="\$">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -202,5 +202,10 @@
             <Font name="Arial" size="15.0" />
          </font>
       </TextField>
+      <Button cancelButton="true" layoutX="7.0" layoutY="366.0" mnemonicParsing="false" onAction="#loadMainWindow" prefHeight="30.0" prefWidth="40.0" text="🢀">
+         <font>
+            <Font name="Arial" size="15.0" />
+         </font>
+      </Button>
    </children>
 </Pane>
