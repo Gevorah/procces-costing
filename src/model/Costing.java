@@ -65,8 +65,20 @@ public class Costing {
 				results.get("Costo Total Prod Ter") + results.get("Costo Total IF"));
 	}
 	
+	public void unidadesIF() {
+		GUI.extracted.put("Unidades IF", GUI.extracted.get("Unidades II") 
+				+GUI.extracted.get("Unidades Comenzadas") - GUI.extracted.get("Unidades Terminadas"));
+	}
+	
+	public void unidadesTerminadas() {
+		GUI.extracted.put("Unidades Terminadas", GUI.extracted.get("Unidades II") 
+				+GUI.extracted.get("Unidades Comenzadas") - GUI.extracted.get("Unidades IF"));
+	}
+	
 	public void peps() {
 		double unidIyT = GUI.extracted.get("Unidades II") - GUI.extracted.get("Unidades Terminadas");
+		if(GUI.undsIF==false) unidadesIF();
+		else unidadesTerminadas();
 		equivalentProduction(unidIyT);
 		costoUnitario();
 		asignarCostos(unidIyT);
@@ -91,7 +103,7 @@ public class Costing {
 				+GUI.extracted.get("Costo Agregado MOD")+GUI.extracted.get("Costo Agregado CIF"),
 				"Inv. inicial PP"+CSVSEPARATOR,GUI.extracted.get("Unidades II"),
 				"Inv. final PP"+CSVSEPARATOR,results.get("Costo Total IF"),
-				"Costos producto terminado:"+CSVSEPARATOR,results.get("Costo Total Prod Ter"));
+				"Costos producto terminado:"+CSVSEPARATOR,"");
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter("data"+File.separator+entry[0]+"-"+entry[1]+".csv"));
 			bw.write(result);

@@ -7,6 +7,8 @@ import javafx.fxml.FXMLLoader;
 import javafx.event.ActionEvent;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -59,9 +61,6 @@ public class GUI {
 
     @FXML
     private TextField unitsIFtxt;
-
-    @FXML
-    private TextField costIFtxt;
 
     @FXML
     private TextField acMDtxt;
@@ -135,24 +134,48 @@ public class GUI {
 	}
 	public static HashMap<String, Double> extracted;
 	void commonData() {
-		costing.entry[2] = processtxt.getText();
-		extracted.clear();
-		extracted.put("Unidades II", Double.parseDouble(unitsIItxt.getText()));
-		extracted.put("Costo II", Double.parseDouble(costIItxt.getText()));
-		extracted.put("%MD II", Double.parseDouble(pMDIItxt.getText())/100);
-		extracted.put("%MOD II", Double.parseDouble(pMODIItxt.getText())/100);
-		extracted.put("%CIF II", Double.parseDouble(pCIFIItxt.getText())/100);
-		extracted.put("Unidades IF", Double.parseDouble(unitsIFtxt.getText()));
-		extracted.put("Costo IF", Double.parseDouble(costIFtxt.getText()));
-		extracted.put("%MD IF", Double.parseDouble(pMDIFtxt.getText())/100);
-		extracted.put("%MOD IF", Double.parseDouble(pMODIFtxt.getText())/100);
-		extracted.put("%CIF IF", Double.parseDouble(pCIFIFtxt.getText())/100);
-		extracted.put("Unidades Comenzadas", Double.parseDouble(unitsStartedtxt.getText()));
-		extracted.put("Costo Comenzadas", Double.parseDouble(costStartedtxt.getText()));
-		extracted.put("Unidades Terminadas", Double.parseDouble(unitsFinishedtxt.getText()));
-		extracted.put("Costo Agregado MD", Double.parseDouble(acMDtxt.getText()));
-		extracted.put("Costo Agregado MOD", Double.parseDouble(acMODtxt.getText()));
-		extracted.put("Costo Agregado CIF", Double.parseDouble(acCIFtxt.getText()));
+		try {
+			costing.entry[2] = processtxt.getText();
+			extracted.clear();
+			extracted.put("Unidades II", Double.parseDouble(unitsIItxt.getText()));
+			extracted.put("Costo II", Double.parseDouble(costIItxt.getText()));
+			extracted.put("%MD II", Double.parseDouble(pMDIItxt.getText())/100);
+			extracted.put("%MOD II", Double.parseDouble(pMODIItxt.getText())/100);
+			extracted.put("%CIF II", Double.parseDouble(pCIFIItxt.getText())/100);
+			extracted.put("%MD IF", Double.parseDouble(pMDIFtxt.getText())/100);
+			extracted.put("%MOD IF", Double.parseDouble(pMODIFtxt.getText())/100);
+			extracted.put("%CIF IF", Double.parseDouble(pCIFIFtxt.getText())/100);
+			extracted.put("Unidades Comenzadas", Double.parseDouble(unitsStartedtxt.getText()));
+			extracted.put("Costo Comenzadas", Double.parseDouble(costStartedtxt.getText()));
+			extracted.put("Costo Agregado MD", Double.parseDouble(acMDtxt.getText()));
+			extracted.put("Costo Agregado MOD", Double.parseDouble(acMODtxt.getText()));
+			extracted.put("Costo Agregado CIF", Double.parseDouble(acCIFtxt.getText()));
+		}catch(NullPointerException npe) {
+			extracted.clear();
+			alert("Por favor llene todos los espacios");
+		}catch(NumberFormatException nfe) {
+			extracted.clear();
+			alert("Por favor solo ingrese números");
+		}
+		if(unitsIFtxt.getText().equals("") && unitsFinishedtxt.getText().equals("")) {
+			alert("Por favor llene el espacio de Unidades del Inventario Final o Unidades Terminadas");
+		}else if(unitsIFtxt.getText().equals("")){
+			extracted.put("Unidades Terminadas", Double.parseDouble(unitsFinishedtxt.getText()));
+			undsIF = false;
+		}else{
+			extracted.put("Unidades IF", Double.parseDouble(unitsIFtxt.getText()));
+			undsIF = true;
+		}
+		
+	}
+	public static boolean undsIF;
+	
+	public void alert(String sAlert) {
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("Error");
+		alert.setHeaderText(null);
+		alert.setContentText(sAlert);
+		alert.showAndWait();
 	}
 	
 	@FXML
@@ -160,16 +183,25 @@ public class GUI {
 		commonData();
 		costing.peps();
     }
-	
+	public static HashMap<String, Double> extra;
 	@FXML
     void methodPP(ActionEvent event) {
 		commonData();
-		extracted.put("Costo transferido", Double.parseDouble(transferCosttxt.getText()));
-		extracted.put("Costo MD",Double.parseDouble(cMDtxt.getText()));
-		extracted.put("Costo MOD",Double.parseDouble(cMODtxt.getText()));
-		extracted.put("Costo CIF",Double.parseDouble(cCIFtxt.getText()));
-		window.close();
-		
+		try {
+			extra.clear();
+			extra.put("Costo transferido", Double.parseDouble(transferCosttxt.getText()));
+			extra.put("Costo MD",Double.parseDouble(cMDtxt.getText()));
+			extra.put("Costo MOD",Double.parseDouble(cMODtxt.getText()));
+			extra.put("Costo CIF",Double.parseDouble(cCIFtxt.getText()));
+			window.close();
+		}catch(NullPointerException npe) {
+			extra.clear();
+			alert("Por favor llene todos los espacios");
+		}catch(NumberFormatException nfe) {
+			extra.clear();
+			alert("Por favor solo ingrese números");
+		}
+		costing.pp();
     }
 	
 	

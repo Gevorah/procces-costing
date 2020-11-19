@@ -138,12 +138,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </TextField>
-      <TextField fx:id="unitsIFtxt" layoutX="360.0" layoutY="81.0" prefHeight="30.0" prefWidth="90.0" promptText="Unidades">
-         <font>
-            <Font name="Arial" size="15.0" />
-         </font>
-      </TextField>
-      <TextField fx:id="costIFtxt" layoutX="470.0" layoutY="81.0" prefHeight="30.0" prefWidth="110.0" promptText="\$">
+      <TextField fx:id="unitsIFtxt" layoutX="428.0" layoutY="82.0" prefHeight="30.0" prefWidth="90.0" promptText="Unidades">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
