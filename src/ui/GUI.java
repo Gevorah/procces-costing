@@ -23,7 +23,7 @@ public class GUI {
     private TextField businesstxt;
 
     @FXML
-    private PasswordField passtxt;
+    private TextField periodotxt;
     
     @FXML
     private TextField unitsIItxt;
@@ -90,8 +90,6 @@ public class GUI {
 
     @FXML
     private TextField cCIFtxt;
-
-    
     
 	private Costing costing;
 	public GUI(Costing costing) {
@@ -119,6 +117,7 @@ public class GUI {
 		mainPane.getChildren().clear();
 		mainPane.setCenter(setting);
 	}
+	DialogPane dp;
 	@FXML
 	public void loadPopUp() throws Exception {
 		FXMLLoader loader = new FXMLLoader(getClass().getResource("pp-pop-up.fxml"));
@@ -137,7 +136,7 @@ public class GUI {
 	
 	@FXML
     void methodPP(ActionEvent event) {
-
+		
     }
 	
 	

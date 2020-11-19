@@ -19,7 +19,7 @@
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="60.0" layoutY="81.0" prefHeight="30.0" prefWidth="90.0">
+      <TextField fx:id="unitsIItxt" layoutX="60.0" layoutY="81.0" prefHeight="30.0" prefWidth="90.0" promptText="Unidades">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -29,7 +29,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="129.0" layoutY="121.0" prefHeight="30.0" prefWidth="90.0">
+      <TextField fx:id="pMDIItxt" layoutX="129.0" layoutY="121.0" prefHeight="30.0" prefWidth="90.0" promptText="90">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -39,7 +39,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="129.0" layoutY="161.0" prefHeight="30.0" prefWidth="90.0">
+      <TextField fx:id="pMODIItxt" layoutX="129.0" layoutY="161.0" prefHeight="30.0" prefWidth="90.0" promptText="90">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -49,7 +49,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="129.0" layoutY="201.0" prefHeight="30.0" prefWidth="90.0">
+      <TextField fx:id="pCIFIItxt" layoutX="129.0" layoutY="201.0" prefHeight="30.0" prefWidth="90.0" promptText="90">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -69,7 +69,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="428.0" layoutY="121.0" prefHeight="30.0" prefWidth="90.0">
+      <TextField fx:id="pMDIFtxt" layoutX="428.0" layoutY="121.0" prefHeight="30.0" prefWidth="90.0" promptText="90">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -79,7 +79,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="428.0" layoutY="161.0" prefHeight="30.0" prefWidth="90.0">
+      <TextField fx:id="pMODIFtxt" layoutX="428.0" layoutY="161.0" prefHeight="30.0" prefWidth="90.0" promptText="90">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -89,7 +89,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="428.0" layoutY="201.0" prefHeight="30.0" prefWidth="90.0">
+      <TextField fx:id="pCIFIFtxt" layoutX="428.0" layoutY="201.0" prefHeight="30.0" prefWidth="90.0" promptText="90">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -101,7 +101,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="240.0" layoutY="250.0" prefHeight="30.0" prefWidth="110.0">
+      <TextField fx:id="costStartedtxt" layoutX="240.0" layoutY="250.0" prefHeight="30.0" prefWidth="110.0" promptText="\$">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -111,7 +111,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="470.0" layoutY="250.0" prefHeight="30.0" prefWidth="110.0">
+      <TextField fx:id="unitsFinishedtxt" layoutX="470.0" layoutY="250.0" prefHeight="30.0" prefWidth="110.0" promptText="Unidades">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -121,7 +121,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="390.0" layoutY="10.0" prefHeight="30.0" prefWidth="150.0">
+      <TextField fx:id="processlbl" layoutX="390.0" layoutY="10.0" prefHeight="30.0" prefWidth="150.0">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -133,17 +133,17 @@
       </Label>
       <Separator layoutX="200.0" layoutY="45.0" prefWidth="200.0" />
       <Separator layoutX="200.0" layoutY="286.0" prefWidth="200.0" />
-      <TextField layoutX="170.0" layoutY="81.0" prefHeight="30.0" prefWidth="110.0">
+      <TextField fx:id="costIItxt" layoutX="170.0" layoutY="81.0" prefHeight="30.0" prefWidth="110.0" promptText="\$">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </TextField>
-      <TextField layoutX="360.0" layoutY="81.0" prefHeight="30.0" prefWidth="90.0">
+      <TextField fx:id="unitsIFtxt" layoutX="360.0" layoutY="81.0" prefHeight="30.0" prefWidth="90.0" promptText="Unidades">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </TextField>
-      <TextField layoutX="470.0" layoutY="81.0" prefHeight="30.0" prefWidth="110.0">
+      <TextField fx:id="costIFtxt" layoutX="470.0" layoutY="81.0" prefHeight="30.0" prefWidth="110.0" promptText="\$">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -153,7 +153,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="100.0" layoutY="324.0" prefHeight="30.0" prefWidth="90.0">
+      <TextField fx:id="acpMDtxt" layoutX="100.0" layoutY="324.0" prefHeight="30.0" prefWidth="90.0" promptText="90">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -163,7 +163,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="490.0" layoutY="324.0" prefHeight="30.0" prefWidth="90.0">
+      <TextField fx:id="acpCIFtxt" layoutX="490.0" layoutY="324.0" prefHeight="30.0" prefWidth="90.0" promptText="90">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -173,7 +173,7 @@
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <TextField layoutX="300.0" layoutY="324.0" prefHeight="30.0" prefWidth="90.0">
+      <TextField fx:id="acpMODtxt" layoutX="300.0" layoutY="324.0" prefHeight="30.0" prefWidth="90.0" promptText="90">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
@@ -183,12 +183,12 @@
             <Font name="Arial Bold" size="15.0" />
          </font>
       </Label>
-      <Label layoutX="95.0" layoutY="15.0" text="Empty">
+      <Label fx:id="businesslbl" layoutX="95.0" layoutY="15.0" text="Empty">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
       </Label>
-      <Button layoutX="224.0" layoutY="366.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="70.0" text="PEPS">
+      <Button layoutX="224.0" layoutY="366.0" mnemonicParsing="false" onAction="#methodPEPS" prefHeight="30.0" prefWidth="70.0" text="PEPS">
          <font>
             <Font name="Arial" size="15.0" />
          </font></Button>
@@ -197,7 +197,7 @@
             <Font name="Arial" size="15.0" />
          </font></Button>
       <Separator layoutX="200.0" layoutY="360.0" prefWidth="200.0" />
-      <TextField layoutX="130.0" layoutY="250.0" prefHeight="30.0" prefWidth="90.0">
+      <TextField fx:id="unitsStartedtxt" layoutX="130.0" layoutY="250.0" prefHeight="30.0" prefWidth="90.0" promptText="Unidades">
          <font>
             <Font name="Arial" size="15.0" />
          </font>
