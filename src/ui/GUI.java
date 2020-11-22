@@ -1,6 +1,9 @@
 package ui;
 
 import java.util.*;
+
+import javax.swing.JFileChooser;
+
 import java.io.*;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -108,7 +111,7 @@ public class GUI {
     	costing.entry[0] = businesstxt.getText();
     	costing.entry[1] = periodotxt.getText();
     	loadProcessWindow(null);
-    	
+    	businesslbl.setText(costing.entry[0]);
     }
     
 	@FXML
@@ -133,9 +136,10 @@ public class GUI {
 		window.show();
 	}
 	public static HashMap<String, Double> extracted;
-	void commonData() {
+	boolean commonData() {
 		try {
-			costing.entry[2] = processtxt.getText();
+			if(!processtxt.getText().equals(""))costing.entry[2] = processtxt.getText();
+			else throw new NumberFormatException();
 			extracted.clear();
 			extracted.put("Unidades II", Double.parseDouble(unitsIItxt.getText()));
 			extracted.put("Costo II", Double.parseDouble(costIItxt.getText()));
@@ -150,39 +154,45 @@ public class GUI {
 			extracted.put("Costo Agregado MD", Double.parseDouble(acMDtxt.getText()));
 			extracted.put("Costo Agregado MOD", Double.parseDouble(acMODtxt.getText()));
 			extracted.put("Costo Agregado CIF", Double.parseDouble(acCIFtxt.getText()));
-		}catch(NullPointerException npe) {
-			extracted.clear();
-			alert("Por favor llene todos los espacios");
+			if(unitsIFtxt.getText().equals("") && unitsFinishedtxt.getText().equals("")) {
+				alert(AlertType.WARNING,"Advertencia","Por favor llene uno: Unidades del Inventario Final o Unidades Terminadas");
+			}else if(unitsIFtxt.getText().equals("")){
+				extracted.put("Unidades Terminadas", Double.parseDouble(unitsFinishedtxt.getText()));
+				undsIF = false;
+			}else{
+				extracted.put("Unidades IF", Double.parseDouble(unitsIFtxt.getText()));
+				undsIF = true;
+			}
+			return true;
 		}catch(NumberFormatException nfe) {
 			extracted.clear();
-			alert("Por favor solo ingrese números");
-		}
-		if(unitsIFtxt.getText().equals("") && unitsFinishedtxt.getText().equals("")) {
-			alert("Por favor llene el espacio de Unidades del Inventario Final o Unidades Terminadas");
-		}else if(unitsIFtxt.getText().equals("")){
-			extracted.put("Unidades Terminadas", Double.parseDouble(unitsFinishedtxt.getText()));
-			undsIF = false;
-		}else{
-			extracted.put("Unidades IF", Double.parseDouble(unitsIFtxt.getText()));
-			undsIF = true;
+			alert(AlertType.ERROR,"Error","Por favor llene todos los espacios y solo utilice números");
+			return false;
 		}
 		
 	}
 	public static boolean undsIF;
 	
-	public void alert(String sAlert) {
-		Alert alert = new Alert(AlertType.ERROR);
-		alert.setTitle("Error");
+	public void alert(AlertType a, String title, String content) {
+		Alert alert = new Alert(a);
+		alert.setTitle(title);
 		alert.setHeaderText(null);
-		alert.setContentText(sAlert);
+		alert.setContentText(content);
 		alert.showAndWait();
 	}
 	
 	@FXML
     void methodPEPS(ActionEvent event) {
-		commonData();
-		costing.peps();
+		if(commonData()){
+			try {
+				costing.peps(save());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+			alert(AlertType.INFORMATION,"Listo!","Ya puede revisar el archivo.");
+		}
     }
+	
 	public static HashMap<String, Double> extra;
 	@FXML
     void methodPP(ActionEvent event) {
@@ -196,15 +206,25 @@ public class GUI {
 			window.close();
 		}catch(NullPointerException npe) {
 			extra.clear();
-			alert("Por favor llene todos los espacios");
+			alert(AlertType.ERROR,"Error","Por favor llene todos los espacios");
 		}catch(NumberFormatException nfe) {
 			extra.clear();
-			alert("Por favor solo ingrese números");
+			alert(AlertType.ERROR,"Error","Por favor solo ingrese números");
 		}
 		costing.pp();
     }
 	
-	
+	public String save() throws IOException {
+		JFileChooser chooser = new JFileChooser();
+		chooser.setCurrentDirectory(new java.io.File("."));
+		chooser.setDialogTitle("Select Directory");
+		chooser.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
+		chooser.setAcceptAllFileFilterUsed(false);
+		if (chooser.showOpenDialog(null) == JFileChooser.APPROVE_OPTION) 
+			return chooser.getSelectedFile().getCanonicalPath();
+		else return "data";
+		
+	}
 	
     @FXML
     void loadConcepts(ActionEvent event) {
