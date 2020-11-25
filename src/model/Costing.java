@@ -124,14 +124,14 @@ public class Costing {
 		costUnit.put("Costo Unitario", costUnit.get("MD") + costUnit.get("MOD") + costUnit.get("CIF"));
 		costUnit.put("Cts Transferidos", (GUI.extra.get("Costo Transferido") + GUI.extracted.get("Costo Comenzadas")) 
 				/ (GUI.extracted.get("Unidades Terminadas") + GUI.extracted.get("Unidades IF")));
-		costUnit.put("Total", costUnit.get("Costo Unitario") + costUnit.get("Cts Trasnferidos"));
+		costUnit.put("Total", costUnit.get("Costo Unitario") + costUnit.get("Cts Transferidos"));
 		return String.format("%s%n%s%.1f%n%s%.1f%n%s%.1f%n%s%.1f%n%s%.1f%n%s%.1f%n%n%n",
 				"Costo por Unidad",
 				"MD"+CSVCELLESEPARATOR,costUnit.get("MD"),
 				"MOD"+CSVCELLESEPARATOR,costUnit.get("MOD"),
 				"CIF"+CSVCELLESEPARATOR,costUnit.get("CIF"),
 				"Costo Unitario"+CSVCELLESEPARATOR,costUnit.get("Costo Unitario"),
-				"Costo Transferido"+CSVCELLESEPARATOR,costUnit.get("Cts Trasnferidos"),
+				"Costo Transferido"+CSVCELLESEPARATOR,costUnit.get("Cts Transferidos"),
 				"Costo Total Unitario"+CSVCELLESEPARATOR,costUnit.get("Total"));
 	}
 	public void costAssignPP() {
@@ -141,7 +141,7 @@ public class Costing {
 		results.put("MOD", equiUnit.get("MOD IF") * costUnit.get("MOD"));
 		results.put("CIF", equiUnit.get("CIF IF") * costUnit.get("CIF"));
 		results.put("Costos Transferidos IF", GUI.extracted.get("Unidades IF") * costUnit.get("Cts Transferidos"));
-		results.put("Costo Total IF", results.get("MD") + results.get("MOD") + results.get("CIF") + results.get("Costo Transferido"));
+		results.put("Costo Total IF", results.get("MD") + results.get("MOD") + results.get("CIF") + results.get("Costos Transferidos IF"));
 		results.put("Total Costos Asignados", results.get("Costo Total Prod Ter") + results.get("Costo Total IF"));
 	}
 	public void pp(String path) {
