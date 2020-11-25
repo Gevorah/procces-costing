@@ -1,0 +1,28 @@
+Producción Equivalente,,,MD,MOD,CIF
+Inv. inicial PP,,2000.0,2000.0,1200.0,1000.0
+Iniciadas y Terminadas,,6000.0,6000.0,6000.0,6000.0
+Inv. final PP,,4000.0,3600.0,2800.0,1400.0
+Total,,12000.0,11600.0,10000.0,8400.0
+
+
+Costo por Unidad
+MD,,82.8
+MOD,,36.0
+CIF,,21.4
+Costo Unitario,,140.2
+Costo Transferido,,160.0
+Costo Total Unitario,,300.2
+
+
+PP
+Estado de costos
+Empresa:,Ltda
+Periodo:,Junio
+Proceso:,Envasado
+MD,,960000.00
+MOD,,360000.00
+CIF,,180000.00
+Costos agregados a producción,,1500000.00
+Inv. inicial PP,,647000.00
+Inv. final PP,,1068731.03
+Costos producto terminado:,,1078268.97

@@ -94,7 +94,7 @@ public class Costing {
 		String equi = equivalentProductionPEPS(unidIyT);
 		String unit = unitCostPEPS(unidIyT);
 		costAssignPEPS(unidIyT);
-		toCSV(equi,unit,costs("PEPS"),path);
+		toCSV("PEPS\n",equi,unit,costs(),path);
 	}
 
 	public String equivalentProductionPP() {
@@ -134,7 +134,7 @@ public class Costing {
 				"Costo Transferido"+CSVCELLESEPARATOR,costUnit.get("Cts Trasnferidos"),
 				"Costo Total Unitario"+CSVCELLESEPARATOR,costUnit.get("Total"));
 	}
-	public void costAssignPP(double unidIyT) {
+	public void costAssignPP() {
 		results.clear();
 		results.put("Costo Total Prod Ter", GUI.extracted.get("Unidades Terminadas") * costUnit.get("Total"));
 		results.put("MD", equiUnit.get("MD IF") * costUnit.get("MD"));
@@ -147,21 +147,19 @@ public class Costing {
 	public void pp(String path) {
 		if(GUI.undsIF==false) unidadesIF();
 		else unidadesTerminadas();
-		double unidIyT = GUI.extracted.get("Unidades Terminadas") - GUI.extracted.get("Unidades II");
-		String equi = equivalentProductionPEPS(unidIyT);
-		String unit = unitCostPEPS(unidIyT);
-		costAssignPEPS(unidIyT);
-		toCSV(equi,unit,costs("PP"),path);
+		String equi = equivalentProductionPP();
+		String unit = unitCostPP();
+		costAssignPP();
+		toCSV("PP\n",equi,unit,costs(),path);
 	}
 	
-	public String costs(String title) {
+	public String costs() {
 		results.put("Total Costos Agregados",GUI.extracted.get("Costo Agregado MD")
 				+GUI.extracted.get("Costo Agregado MOD") + GUI.extracted.get("Costo Agregado CIF"));
 		results.put("Costo Prod Ter", results.get("Total Costos Agregados") 
 				+GUI.extracted.get("Costo II") - results.get("Costo Total IF"));
-		return String.format("%s%n%s%n%s%s%n%s%s%n%s%s%n"
+		return String.format("%s%n%s%s%n%s%s%n%s%s%n"
 				+"%s%.2f%n%s%.2f%n%s%.2f%n%s%.2f%n%s%.2f%n%s%.2f%n%s%.2f",
-				title,
 				"Estado de costos",
 				"Empresa:"+CSVSEPARATOR,entry[0],
 				"Periodo:"+CSVSEPARATOR,entry[1],
@@ -177,10 +175,10 @@ public class Costing {
 	}
 	public final static String CSVSEPARATOR = ",";
 	public final static String CSVCELLESEPARATOR = ",,";
-	public void toCSV(String equi, String unit, String costs, String path)  {
+	public void toCSV(String title,String equi, String unit, String costs, String path)  {
 		try {
 			BufferedWriter bw = new BufferedWriter(new FileWriter(path+File.separator+entry[0]+"-"+entry[1]+".csv"));
-			bw.write(equi+unit+costs);
+			bw.write(title+equi+unit+costs);
 			bw.close();
 		} catch (IOException e) {
 			e.printStackTrace();
