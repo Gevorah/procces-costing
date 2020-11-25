@@ -31,5 +31,6 @@ public class Main extends Application {
 		stage.setTitle("Procces Costing");
 		gui.loadMainWindow(null);
 		stage.show();
+		stage.setResizable(false);
 	}
 }

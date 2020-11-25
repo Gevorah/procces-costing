@@ -12,6 +12,9 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonType;
+import javafx.scene.control.Dialog;
+import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.BorderPane;
@@ -28,6 +31,9 @@ public class GUI {
 
     @FXML
     private TextField periodotxt;
+    
+    @FXML
+    private Label contentlbl;
     
     @FXML
     private TextField unitsIItxt;
@@ -96,6 +102,7 @@ public class GUI {
 	public GUI(Costing costing) {
 		this.costing=costing;
 		extracted = new HashMap<String, Double>();
+		extra = new HashMap<String, Double>();
 	}
 	@FXML
 	public void loadMainWindow(ActionEvent event) throws IOException {
@@ -108,10 +115,15 @@ public class GUI {
 	
     @FXML
     void signIn(ActionEvent event) throws IOException {
-    	costing.entry[0] = businesstxt.getText();
-    	costing.entry[1] = periodotxt.getText();
-    	loadProcessWindow(null);
-    	businesslbl.setText(costing.entry[0]);
+    	if(!businesstxt.getText().equals("") && !periodotxt.getText().equals("")) {
+    		costing.entry[0] = businesstxt.getText();
+    		costing.entry[1] = periodotxt.getText();
+    		loadProcessWindow(null);
+    		businesslbl.setText(costing.entry[0]);
+    	} else {
+    		alert(AlertType.ERROR,"Error","Por favor llene los espacios.");
+    	}
+    	
     }
     
 	@FXML
@@ -125,16 +137,21 @@ public class GUI {
 	Stage window;
 	@FXML
 	public void loadPopUp() throws Exception {
-		FXMLLoader loader = new FXMLLoader(getClass().getResource("pp-pop-up.fxml"));
-		loader.setController(this);
-		window = new Stage();
-		window.initModality(Modality.APPLICATION_MODAL);
-		window.setTitle("PP extra info");
-		Parent root = loader.load();
-		Scene scene = new Scene(root);
-		window.setScene(scene);
-		window.show();
-	}
+		ppBool = commonData();
+		if(ppBool) {
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("pp-pop-up.fxml"));
+			loader.setController(this);
+			window = new Stage();
+			window.initModality(Modality.APPLICATION_MODAL);
+			window.setTitle("PP extra info");
+			Parent root = loader.load();
+			Scene scene = new Scene(root);
+			window.setScene(scene);
+			window.show();
+			window.setResizable(false);
+		}
+		
+	} 
 	public static HashMap<String, Double> extracted;
 	boolean commonData() {
 		try {
@@ -192,26 +209,26 @@ public class GUI {
 			alert(AlertType.INFORMATION,"Listo!","Ya puede revisar el archivo.");
 		}
     }
-	
+	public static boolean ppBool;
 	public static HashMap<String, Double> extra;
 	@FXML
-    void methodPP(ActionEvent event) {
-		commonData();
-		try {
-			extra.clear();
-			extra.put("Costo transferido", Double.parseDouble(transferCosttxt.getText()));
-			extra.put("Costo MD",Double.parseDouble(cMDtxt.getText()));
-			extra.put("Costo MOD",Double.parseDouble(cMODtxt.getText()));
-			extra.put("Costo CIF",Double.parseDouble(cCIFtxt.getText()));
-			window.close();
-		}catch(NullPointerException npe) {
-			extra.clear();
-			alert(AlertType.ERROR,"Error","Por favor llene todos los espacios");
-		}catch(NumberFormatException nfe) {
-			extra.clear();
-			alert(AlertType.ERROR,"Error","Por favor solo ingrese números");
+    void methodPP(ActionEvent event) throws IOException {
+		if(ppBool){
+			try {
+				extra.clear();
+				extra.put("Costo Transferido", Double.parseDouble(transferCosttxt.getText()));
+				extra.put("Costo MD",Double.parseDouble(cMDtxt.getText()));
+				extra.put("Costo MOD",Double.parseDouble(cMODtxt.getText()));
+				extra.put("Costo CIF",Double.parseDouble(cCIFtxt.getText()));
+				window.close();
+				costing.pp(save());
+			}catch(NumberFormatException nfe) {
+				extra.clear();
+				alert(AlertType.ERROR,"Error","Por favor llene todos los espacios y solo utilice números");
+			}
+			alert(AlertType.INFORMATION,"Listo!","Ya puede revisar el archivo.");
 		}
-		costing.pp();
+		
     }
 	
 	public String save() throws IOException {
@@ -225,15 +242,41 @@ public class GUI {
 		else return "data";
 		
 	}
+	void dialog(String title, String content) throws IOException {
+		FXMLLoader loader = new FXMLLoader(getClass().getResource("dialog-window.fxml"));
+		loader.setController(this);
+		DialogPane root = loader.load();
+		Dialog<ButtonType> dialog = new Dialog<>();
+		dialog.setDialogPane(root);
+		dialog.setTitle(title);
+    	contentlbl.setText(content);
+    	dialog.show();
+    	dialog.setResizable(false);
+	}
 	
     @FXML
-    void loadConcepts(ActionEvent event) {
-
+    void loadConcepts(ActionEvent event) throws IOException {
+    	String content = String.format("%s%n%s%n%s%n%s%n%s%n%s",
+    			"PP: Producto en Proceso.",
+    			"MD: Material Directo.",
+    			"MOD: Mano de Obra Directa.",
+    			"CIF: Costos Indirectos de Fabricación.",
+    			"PEPS: Método Primeras en Entrar, Primeras en Salir.",
+    			"PP: Método Promedio Ponderado.");
+    	dialog("Conceptos", content);
     }
 
     @FXML
-    void loadInstructions(ActionEvent event) {
-
+    void loadInstructions(ActionEvent event) throws IOException {
+    	String content = String.format("%s%n%s%n%s%n%s%n%s%n%s",
+    			"1.Ingrese el nombre de la empresa y el periodo",
+    			"2.Ingrese los datos correspondientes en las casillas. ",
+    			"*Tenga en cuenta que no necesariamente debe ingresar las unidades del "
+    			+ "inventario final y unidades terminadas, puede ingresar cualquiera de las dos.",
+    			"3.Haga clic en el boton del metodo que desea usar. [PEPS] o [PP].",
+    			"*En caso de que sea [PP] ingrese los datos pedidos en la ventana emergente.",
+    			"4.Seleccione el directorio en el que desea guardar el archivo.");
+    	dialog("Instrucciones", content);
     }
 
 }
